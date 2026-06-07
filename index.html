@@ -189,15 +189,11 @@ section { padding: 80px 0; }
 .cri-cell.label { background: var(--bg-soft); font-weight: 800; color: var(--black); text-align: center; font-size: 19px; }
 .cri-cell .em { color: var(--primary); font-weight: 800; }
 .cri-cell small { display: block; color: var(--text-soft); font-size: 14px; margin-top: 4px; line-height: 1.55; }
-/* 모바일: 열 머리글을 각 셀에 붙여 카드형으로 표시 */
 .cri-cell[data-h]::before { content: none; }
+/* 모바일에서도 데스크탑과 동일한 표 레이아웃 유지(가로 스크롤로 처리) */
 @media (max-width: 768px) {
-  .cri-row { grid-template-columns: 1fr; }
-  .cri-cell { border-right: none; border-bottom: 1px solid var(--line); padding: 16px 18px; font-size: 18px; }
-  .cri-row > .cri-cell.head { display: none; }
-  .cri-cell.label { padding: 12px 18px; background: var(--primary); color: #fff; text-align: left; font-size: 18px; }
-  .cri-cell[data-h]::before { content: attr(data-h); display: block; font-size: 14px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
-  .cri-cell small { font-size: 14.5px; }
+  .criteria-table { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .cri-row { min-width: 680px; }
 }
 
 /* POSITIONING */
@@ -322,10 +318,14 @@ section { padding: 80px 0; }
 .proc-name { font-size: 16px; font-weight: 800; color: white; margin-bottom: 7px; }
 .proc-detail { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.65; }
 @media (max-width: 768px) {
-  .proc-steps { grid-template-columns: 1fr; gap: 22px; }
+  /* 한 줄로만 길어지지 않도록 2x2 카드 그리드로 화면을 채움 */
+  .proc-steps { grid-template-columns: repeat(2, 1fr); gap: 14px; }
   .proc-steps::before { display: none; }
-  .proc-step { display: grid; grid-template-columns: 56px 1fr; gap: 18px; text-align: left; align-items: center; }
-  .proc-circle { margin: 0; }
+  .proc-step { padding: 24px 14px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; }
+  .proc-circle { width: 50px; height: 50px; font-size: 20px; margin: 0 auto 14px; }
+}
+@media (max-width: 360px) {
+  .proc-steps { grid-template-columns: 1fr; }
 }
 
 /* 누적 실적 */
@@ -553,16 +553,16 @@ section { padding: 80px 0; }
 
 /* 모바일 하단 고정 CTA 바 */
 .mobile-cta { display: none; }
-@media (max-width: 600px) {
+@media (max-width: 768px) {
+  /* 모바일·태블릿에서는 세로 플로팅(버튼이 가로로 길어 본문을 가림) 대신 하단 고정 바만 노출 */
+  .floating { display: none; }
   .mobile-cta { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -4px 16px rgba(10,14,26,0.10); padding-bottom: env(safe-area-inset-bottom, 0); }
   .mcta { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 9px 4px 10px; font-size: 11.5px; font-weight: 800; color: var(--text-mid); border-right: 1px solid var(--line); line-height: 1.2; text-align: center; }
   .mcta:last-child { border-right: none; }
   .mcta .mcta-ico { font-size: 19px; line-height: 1; }
   .mcta.quote { background: var(--primary); color: #fff; }
   .mcta.kakao { background: #FEE500; color: #191919; }
-  /* 우하단 세로 플로팅과 중복되지 않도록 모바일에서는 고정 바만 노출 */
-  .floating { display: none; }
-  body { padding-bottom: 66px; }
+  body { padding-bottom: 72px; }
 }
 </style>
 
@@ -1145,11 +1145,13 @@ section { padding: 80px 0; }
 <!-- 법령 -->
 <section>
   <div class="container">
-    <div class="section-head">
+    <div class="section-head center">
       <div class="section-tag">REGULATIONS</div>
       <h2 class="section-title">보조금 사업비 정산 검증의 법적 근거</h2>
       <p class="section-desc">정산검증은 임의 절차가 아닌 법령상 의무입니다.</p>
+      <button class="collapse-btn" onclick="toggleCollapse(this)" data-open-label="법적 근거 접기" data-close-label="법적 근거 펼쳐보기" aria-expanded="false"><span class="cb-label">법적 근거 펼쳐보기</span> <span class="cb-ico">▾</span></button>
     </div>
+    <div class="collapse-wrap">
     <div class="reg-grid">
       <div class="reg-card">
         <div class="reg-cite">보조금 관리에 관한 법률 §27</div>
@@ -1175,6 +1177,7 @@ section { padding: 80px 0; }
         <div class="reg-content">사업자가 받은 <strong>보조금 전체 총액(연간 수령) 10억 원 이상</strong> 기관은 회계감사 의무 별도 적용.</div>
         <div class="reg-practice"><b>실무:</b> 사업 건별 검증(1억/3억)과 달리, 한 사업자가 받은 보조금 전체를 합산한 기준입니다. 법 개정 추진으로 대상이 10억 → 3억까지 확대 예정.</div>
       </div>
+    </div>
     </div>
   </div>
 </section>
