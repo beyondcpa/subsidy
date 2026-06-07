@@ -1,11 +1,35 @@
 <!DOCTYPE html>
+<!--
+  ============================================================
+  [설정] 카카오톡 채널 URL (단일 관리 지점)
+  - 카톡 CTA 버튼은 모두 아래 JS 상수 KAKAO_CHANNEL_URL 하나만 사용합니다.
+  - URL을 바꾸려면 이 파일 하단 <script> 안의
+        const KAKAO_CHANNEL_URL = '...';
+    한 줄만 수정하면 모든 카톡 버튼에 일괄 적용됩니다.
+  - (URL 미정 시 'KAKAO_CHANNEL_URL_HERE' 로 두면 됩니다.)
+  ============================================================
+-->
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>보조금 사업비 정산 전문 센터 | 정산보고서·검증보고서 양식 다운로드 · 정산검증</title>
+<title>보조금 정산검증·정산보고서 양식 | 보조금 사업비 정산 전문 센터</title>
 <meta name="description" content="국고·지방보조금 정산검증 전문. 삼일회계법인 감사본부 출신 공인회계사. 보조사업 정산보고서·검증보고서 별지 서식 무료 다운로드. 2026년 개정 작성지침 기준, 24시간 견적 회신.">
 <meta name="keywords" content="보조금 정산검증, 국고보조금, 지방보조금, e나라도움, 보탬e, 정산검증 회계법인, 보조사업자 회계감사, R&D 정산, 정산보고서 양식, 정산보고서 서식, 검증보고서 양식, 보조사업 실적보고서, 보조비목별 총괄명세서, 일자별 집행내역, 별지 서식 다운로드, 보조금 관리에 관한 법률 제27조">
+<link rel="canonical" href="https://beyondcpa.github.io/subsidy/">
+
+<!-- Open Graph / SNS 공유 -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="보조금 사업비 정산 전문 센터">
+<meta property="og:title" content="보조금 정산검증·정산보고서 양식 | 보조금 사업비 정산 전문 센터">
+<meta property="og:description" content="국고·지방보조금 정산검증 전문. 삼일회계법인 감사본부 출신 공인회계사. 정산보고서·검증보고서 별지 서식 무료 다운로드. 24시간 견적 회신.">
+<meta property="og:image" content="https://beyondcpa.github.io/subsidy/team.png">
+<meta property="og:url" content="https://beyondcpa.github.io/subsidy/">
+<meta property="og:locale" content="ko_KR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="보조금 정산검증·정산보고서 양식 | 보조금 사업비 정산 전문 센터">
+<meta name="twitter:description" content="국고·지방보조금 정산검증 전문. 삼일회계법인 감사본부 출신 공인회계사. 정산·검증보고서 별지 서식 무료 다운로드.">
+<meta name="twitter:image" content="https://beyondcpa.github.io/subsidy/team.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,6 +74,9 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 section { padding: 80px 0; }
 @media (max-width: 768px) { section { padding: 56px 0; } .container { padding: 0 20px; } }
 
+/* '합리적인 비용' 강조 */
+.hl-cost { color: var(--primary); font-weight: 800; white-space: nowrap; }
+
 /* NAV */
 .nav { position: sticky; top: 0; background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); z-index: 100; }
 .nav-inner { max-width: 1120px; margin: 0 auto; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; }
@@ -84,8 +111,9 @@ section { padding: 80px 0; }
 @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1 !important; transform: none !important; transition: none !important; } }
 
 /* 히어로 진입 애니메이션은 reveal(스크롤 재생) 시스템으로 처리 */
-.hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; line-height: 1.15; letter-spacing: -0.035em; color: var(--black); margin-bottom: 20px; }
+.hero h1 { font-size: clamp(32px, 6vw, 56px); font-weight: 800; line-height: 1.15; letter-spacing: -0.035em; color: var(--black); margin-bottom: 14px; }
 .hero h1 span { color: var(--primary); }
+.hero-lead { font-size: clamp(17px, 2.1vw, 23px); font-weight: 800; color: var(--primary); letter-spacing: -0.02em; margin-bottom: 22px; }
 .hero-sub { font-size: clamp(16.5px, 1.9vw, 20px); color: var(--text-mid); max-width: 660px; margin-bottom: 32px; line-height: 1.7; }
 .hero-ctas { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 56px; }
 .btn { display: inline-flex; align-items: center; gap: 8px; padding: 15px 26px; border-radius: 12px; font-weight: 700; font-size: 15px; transition: all 0.2s; border: 1.5px solid transparent; }
@@ -101,12 +129,23 @@ section { padding: 80px 0; }
 .stat-num.sm { font-size: clamp(22px, 3vw, 31px); }
 .stat-label { font-size: 13.5px; color: var(--text-soft); font-weight: 500; }
 
+/* 결정촉진 블록 (히어로 직후) */
+.urgent { padding: 48px 0; background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.urgent-head { text-align: center; font-size: clamp(22px, 3.4vw, 30px); font-weight: 800; letter-spacing: -0.03em; color: var(--black); line-height: 1.3; margin-bottom: 26px; }
+.urgent-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.urgent-card { display: flex; align-items: flex-start; gap: 12px; background: var(--bg); border: 1px solid var(--line); border-left: 4px solid var(--primary); border-radius: 14px; padding: 18px 18px; }
+.urgent-card .uc-no { flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%; background: var(--primary-bg); color: var(--primary); font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; }
+.urgent-card .uc-txt { font-size: 16px; font-weight: 700; color: var(--text); line-height: 1.5; }
+.urgent-cta { display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap; margin-top: 26px; }
+.urgent-note { font-size: 14.5px; color: var(--text-soft); font-weight: 600; }
+@media (max-width: 768px) { .urgent-grid { grid-template-columns: 1fr; } .urgent { padding: 40px 0; } }
+
 /* SECTION COMMON */
 .section-head { margin-bottom: 40px; }
 .section-head.center { text-align: center; }
 .section-tag { display: inline-block; font-size: 12px; font-weight: 800; color: var(--primary); letter-spacing: 0.12em; margin-bottom: 14px; text-transform: uppercase; }
 .section-title { font-size: clamp(26px, 4vw, 38px); font-weight: 800; letter-spacing: -0.03em; color: var(--black); line-height: 1.25; margin-bottom: 14px; }
-.section-desc { font-size: 18.5px; color: var(--text-mid); max-width: 720px; line-height: 1.8; }
+.section-desc { font-size: 20.5px; color: var(--text-mid); max-width: 720px; line-height: 1.8; }
 .section-head.center .section-desc { margin: 0 auto; }
 
 /* 자가진단 */
@@ -133,27 +172,32 @@ section { padding: 80px 0; }
 .diag-result.show { display: block; }
 .diag-result-tag { display: inline-block; padding: 6px 12px; background: var(--primary-bg); color: var(--primary); border-radius: 100px; font-size: 12px; font-weight: 700; margin-bottom: 14px; }
 .diag-result-title { font-size: 25px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 16px; }
-.diag-result-detail { padding: 20px; background: var(--bg-soft); border-radius: 12px; margin-bottom: 16px; font-size: 15.5px; line-height: 1.8; }
+.diag-result-detail { padding: 20px; background: var(--bg-soft); border-radius: 12px; margin-bottom: 16px; font-size: 17px; line-height: 1.8; }
 .diag-result-detail strong { color: var(--primary); }
 .diag-result-cta { display: flex; gap: 10px; flex-wrap: wrap; }
 .diag-result-cta .btn { flex: 1; justify-content: center; min-width: 140px; }
 
 /* 검증 기준표 */
 .criteria-table { background: white; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-sm); }
-.cri-row { display: grid; grid-template-columns: 110px repeat(3, 1fr); border-bottom: 1px solid var(--line); }
+.cri-row { display: grid; grid-template-columns: 130px repeat(3, 1fr); border-bottom: 1px solid var(--line); }
 .cri-row:last-child { border-bottom: none; }
-.cri-cell { padding: 18px 16px; border-right: 1px solid var(--line); font-size: 16px; line-height: 1.6; }
+.cri-cell { padding: 20px 18px; border-right: 1px solid var(--line); font-size: 18px; line-height: 1.65; }
 .cri-cell:last-child { border-right: none; }
-.cri-cell.head { background: var(--primary); color: white; font-weight: 800; text-align: center; font-size: 14px; }
+.cri-cell.head { background: var(--primary); color: white; font-weight: 800; text-align: center; font-size: 20px; letter-spacing: -0.01em; }
 .cri-cell.head.gold { background: var(--text-mid); }
-.cri-cell.head small { font-weight: 500; opacity: 0.85; font-size: 11px; display: block; margin-top: 2px; }
-.cri-cell.label { background: var(--bg-soft); font-weight: 700; color: var(--black); text-align: center; font-size: 13px; }
+.cri-cell.head small { font-weight: 500; opacity: 0.85; font-size: 13px; display: block; margin-top: 2px; }
+.cri-cell.label { background: var(--bg-soft); font-weight: 800; color: var(--black); text-align: center; font-size: 19px; }
 .cri-cell .em { color: var(--primary); font-weight: 800; }
-.cri-cell small { display: block; color: var(--text-soft); font-size: 11.5px; margin-top: 3px; }
+.cri-cell small { display: block; color: var(--text-soft); font-size: 14px; margin-top: 4px; line-height: 1.55; }
+/* 모바일: 열 머리글을 각 셀에 붙여 카드형으로 표시 */
+.cri-cell[data-h]::before { content: none; }
 @media (max-width: 768px) {
   .cri-row { grid-template-columns: 1fr; }
-  .cri-cell { border-right: none; border-bottom: 1px solid var(--line); }
-  .cri-cell.label { padding: 9px 16px; background: var(--bg-soft2); }
+  .cri-cell { border-right: none; border-bottom: 1px solid var(--line); padding: 16px 18px; font-size: 18px; }
+  .cri-row > .cri-cell.head { display: none; }
+  .cri-cell.label { padding: 12px 18px; background: var(--primary); color: #fff; text-align: left; font-size: 18px; }
+  .cri-cell[data-h]::before { content: attr(data-h); display: block; font-size: 14px; font-weight: 800; color: var(--primary); margin-bottom: 5px; }
+  .cri-cell small { font-size: 14.5px; }
 }
 
 /* POSITIONING */
@@ -177,7 +221,7 @@ section { padding: 80px 0; }
 .strength-icon { width: 52px; height: 52px; background: var(--primary-bg); color: var(--primary); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: 800; margin-bottom: 20px; }
 .strength-num { font-size: 12px; color: var(--text-soft); letter-spacing: 0.1em; font-weight: 700; margin-bottom: 8px; }
 .strength-title { font-size: 20px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; line-height: 1.4; margin-bottom: 12px; }
-.strength-desc { font-size: 17px; color: var(--text-mid); line-height: 1.8; }
+.strength-desc { font-size: 18.5px; color: var(--text-mid); line-height: 1.8; }
 @media (max-width: 768px) { .strength-grid { grid-template-columns: 1fr; } }
 
 /* 회계사 프로필 */
@@ -200,7 +244,7 @@ section { padding: 80px 0; }
 .greeting-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .greeting-photo.noimg { display: flex; align-items: center; justify-content: center; border: 2px dashed var(--line-strong); }
 .greeting-photo.noimg::after { content: '사진 준비 중'; color: var(--text-soft); font-size: 14px; font-weight: 600; }
-.greeting-text { font-size: 16px; color: var(--text-mid); line-height: 1.9; margin: 14px 0 22px; }
+.greeting-text { font-size: 18px; color: var(--text-mid); line-height: 1.9; margin: 14px 0 22px; }
 .greeting-sign { font-size: 20px; font-weight: 800; color: var(--black); }
 .greeting-sign span { font-size: 14px; font-weight: 600; color: var(--primary); margin-left: 8px; }
 @media (max-width: 768px) { .greeting-grid { grid-template-columns: 1fr; gap: 26px; } .greeting-photo { max-width: 240px; margin: 0 auto; } }
@@ -225,8 +269,8 @@ section { padding: 80px 0; }
 .svc-num { font-size: 11px; color: var(--primary); font-weight: 800; letter-spacing: 0.15em; margin-bottom: 12px; }
 .svc-title { font-size: 21px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; margin-bottom: 10px; }
 .svc-tag { display: inline-block; font-size: 11.5px; background: var(--primary-bg); color: var(--primary); padding: 4px 11px; border-radius: 100px; font-weight: 700; margin-bottom: 14px; }
-.svc-desc { font-size: 17px; color: var(--text-mid); line-height: 1.8; margin-bottom: 18px; }
-.svc-list { list-style: none; font-size: 14.5px; color: var(--text-mid); }
+.svc-desc { font-size: 18.5px; color: var(--text-mid); line-height: 1.8; margin-bottom: 18px; }
+.svc-list { list-style: none; font-size: 16px; color: var(--text-mid); }
 .svc-list li { padding: 5px 0; padding-left: 18px; position: relative; }
 .svc-list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary); font-weight: 800; }
 @media (max-width: 768px) { .svc-grid { grid-template-columns: 1fr; } }
@@ -238,11 +282,11 @@ section { padding: 80px 0; }
 .ind-content { margin-top: 22px; background: white; border: 1px solid var(--line); border-radius: 18px; padding: 36px; display: none; }
 .ind-content.active { display: block; }
 .ind-content h3 { font-size: 21px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; margin-bottom: 14px; }
-.ind-content p { font-size: 16.5px; color: var(--text-mid); line-height: 1.8; margin-bottom: 18px; }
+.ind-content p { font-size: 18px; color: var(--text-mid); line-height: 1.8; margin-bottom: 18px; }
 .ind-features { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
 .ind-feature { padding: 15px 17px; background: var(--bg-soft); border-radius: 12px; border-left: 3px solid var(--primary); }
-.ind-feature-title { font-weight: 700; font-size: 14.5px; color: var(--black); margin-bottom: 5px; }
-.ind-feature-desc { font-size: 13.5px; color: var(--text-mid); line-height: 1.65; }
+.ind-feature-title { font-weight: 700; font-size: 16px; color: var(--black); margin-bottom: 5px; }
+.ind-feature-desc { font-size: 15px; color: var(--text-mid); line-height: 1.65; }
 @media (max-width: 600px) { .ind-content { padding: 26px 22px; } .ind-features { grid-template-columns: 1fr; } }
 
 /* 시스템 가이드 */
@@ -260,7 +304,7 @@ section { padding: 80px 0; }
 .sys-block { margin-bottom: 18px; }
 .sys-block:last-child { margin-bottom: 0; }
 .sys-block-label { font-size: 11.5px; color: var(--primary); font-weight: 800; letter-spacing: 0.1em; margin-bottom: 8px; }
-.sys-block-content { font-size: 15.5px; color: var(--text-mid); line-height: 1.75; }
+.sys-block-content { font-size: 17px; color: var(--text-mid); line-height: 1.75; }
 .sys-block-content ul { list-style: none; }
 .sys-block-content li { padding: 4px 0; padding-left: 16px; position: relative; }
 .sys-block-content li::before { content: '•'; position: absolute; left: 0; color: var(--primary); font-weight: 800; }
@@ -276,7 +320,7 @@ section { padding: 80px 0; }
 .proc-step { text-align: center; padding: 0 12px; position: relative; }
 .proc-circle { width: 56px; height: 56px; background: var(--primary); border-radius: 50%; margin: 0 auto 18px; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 900; color: white; position: relative; z-index: 1; box-shadow: 0 8px 24px rgba(0,101,248,0.4); }
 .proc-name { font-size: 16px; font-weight: 800; color: white; margin-bottom: 7px; }
-.proc-detail { font-size: 13.5px; color: rgba(255,255,255,0.6); line-height: 1.65; }
+.proc-detail { font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.65; }
 @media (max-width: 768px) {
   .proc-steps { grid-template-columns: 1fr; gap: 22px; }
   .proc-steps::before { display: none; }
@@ -317,7 +361,7 @@ section { padding: 80px 0; }
 .case-half-label { font-size: 11px; font-weight: 800; letter-spacing: 0.1em; margin-bottom: 9px; }
 .case-half.before .case-half-label { color: var(--danger); }
 .case-half.after .case-half-label { color: var(--success); }
-.case-half-content { font-size: 15.5px; color: var(--text); line-height: 1.7; }
+.case-half-content { font-size: 17px; color: var(--text); line-height: 1.7; }
 .case-half-content strong { font-weight: 800; }
 .case-half.before .case-half-content strong { color: var(--danger); }
 .case-half.after .case-half-content strong { color: var(--success); }
@@ -334,9 +378,9 @@ section { padding: 80px 0; }
 .reg-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-left-width: 6px; }
 .reg-cite { font-size: 12px; color: var(--primary); font-weight: 800; margin-bottom: 9px; }
 .reg-title { font-size: 15.5px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; margin-bottom: 9px; }
-.reg-content { font-size: 16px; color: var(--text-mid); line-height: 1.8; margin-bottom: 11px; }
+.reg-content { font-size: 18px; color: var(--text-mid); line-height: 1.8; margin-bottom: 11px; }
 .reg-content strong { color: var(--black); font-weight: 700; }
-.reg-practice { padding: 12px 16px; background: var(--primary-bg-soft); border-radius: 10px; font-size: 13.5px; color: var(--primary-dark); line-height: 1.7; }
+.reg-practice { padding: 12px 16px; background: var(--primary-bg-soft); border-radius: 10px; font-size: 15px; color: var(--primary-dark); line-height: 1.7; }
 .reg-practice b { color: var(--primary); font-weight: 800; }
 @media (max-width: 768px) { .reg-grid { grid-template-columns: 1fr; } }
 
@@ -345,14 +389,30 @@ section { padding: 80px 0; }
 .faq-list { max-width: 840px; margin: 0 auto; }
 .faq-item { background: white; border: 1px solid var(--line); border-radius: 14px; margin-bottom: 10px; transition: all 0.2s; overflow: hidden; }
 .faq-item.open { border-color: var(--primary); box-shadow: var(--shadow); }
-.faq-q { padding: 22px 22px; font-size: 17.5px; font-weight: 700; color: var(--black); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+.faq-q { padding: 22px 22px; font-size: 19px; font-weight: 700; color: var(--black); display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
 .faq-q:hover { color: var(--primary); }
 .faq-icon { width: 26px; height: 26px; background: var(--primary-bg); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; margin-left: 14px; transition: transform 0.2s; }
 .faq-item.open .faq-icon { transform: rotate(45deg); background: var(--primary); color: white; }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 22px; }
 .faq-item.open .faq-a { max-height: 500px; padding: 0 22px 22px; }
-.faq-a-content { font-size: 17px; color: var(--text-mid); line-height: 1.9; padding-top: 12px; border-top: 1px solid var(--line); }
+.faq-a-content { font-size: 18.5px; color: var(--text-mid); line-height: 1.9; padding-top: 12px; border-top: 1px solid var(--line); }
 .faq-a-content strong { color: var(--black); }
+
+/* 용어 사전 */
+.glossary { background: var(--bg-soft); }
+.gloss-list { max-width: 840px; margin: 0 auto; }
+.gloss-item { background: white; border: 1px solid var(--line); border-radius: 14px; margin-bottom: 10px; transition: all 0.2s; overflow: hidden; }
+.gloss-item.open { border-color: var(--primary); box-shadow: var(--shadow); }
+.gloss-q { width: 100%; text-align: left; font-family: inherit; background: none; padding: 20px 22px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; gap: 14px; }
+.gloss-q:hover .gloss-term { color: var(--primary); }
+.gloss-term { font-size: 19px; font-weight: 800; color: var(--black); letter-spacing: -0.02em; margin: 0; line-height: 1.4; }
+.gloss-icon { width: 26px; height: 26px; background: var(--primary-bg); color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 16px; flex-shrink: 0; transition: transform 0.2s; }
+.gloss-item.open .gloss-icon { transform: rotate(45deg); background: var(--primary); color: white; }
+.gloss-a { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; padding: 0 22px; }
+.gloss-item.open .gloss-a { max-height: 400px; padding: 0 22px 22px; }
+.gloss-a-content { font-size: 18px; color: var(--text-mid); line-height: 1.85; padding-top: 12px; border-top: 1px solid var(--line); }
+.gloss-a-content strong { color: var(--black); }
+@media (max-width: 600px) { .gloss-term { font-size: 17px; } .gloss-a-content { font-size: 16.5px; } }
 
 /* QUOTE */
 .quote { background: var(--black); color: white; position: relative; overflow: hidden; }
@@ -373,6 +433,10 @@ section { padding: 80px 0; }
 .form-submit { width: 100%; background: var(--primary); color: white; padding: 17px; font-weight: 800; font-size: 16px; border-radius: 12px; margin-top: 6px; transition: all 0.2s; font-family: inherit; }
 .form-submit:hover { background: var(--primary-dark); transform: translateY(-2px); box-shadow: var(--shadow-lg); }
 .form-note { text-align: center; color: var(--text-soft); font-size: 13px; margin-top: 14px; }
+.form-consent { display: flex; align-items: flex-start; gap: 10px; margin: 4px 0 10px; font-size: 14.5px; color: var(--text-mid); line-height: 1.6; }
+.form-consent input[type="checkbox"] { width: 20px; height: 20px; margin-top: 2px; flex-shrink: 0; accent-color: var(--primary); cursor: pointer; }
+.form-consent a { color: var(--primary); font-weight: 700; text-decoration: underline; }
+.form-consent .req { color: var(--primary); }
 @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 
 /* 자료실 / 다운로드 */
@@ -433,7 +497,7 @@ section { padding: 80px 0; }
 .collapse-wrap.open { max-height: 4000px; }
 
 /* 플로팅 홈페이지 버튼 */
-.float-btn.site { background: var(--black); color: #fff; }
+.float-btn.site { background: var(--accent); color: var(--black); }
 
 /* 다크 섹션 그라데이션 드리프트 */
 @keyframes glowDrift { 0% { transform: translate(0,0) scale(1); opacity: 0.8; } 50% { transform: translate(38px,26px) scale(1.22); opacity: 1; } 100% { transform: translate(0,0) scale(1); opacity: 0.8; } }
@@ -462,13 +526,91 @@ section { padding: 80px 0; }
 @media (max-width: 768px) { .footer-inner { grid-template-columns: 1fr; gap: 28px; } }
 
 /* FLOATING */
-.floating { position: fixed; right: 20px; bottom: 20px; display: flex; flex-direction: column; gap: 10px; z-index: 90; }
-.float-btn { padding: 13px 20px; background: var(--primary); color: white; font-weight: 700; font-size: 14px; border-radius: 100px; box-shadow: 0 8px 24px rgba(0,101,248,0.35); display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+.floating { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; gap: 10px; z-index: 90; }
+.float-btn { padding: 13px 20px; background: var(--primary); color: white; font-weight: 700; font-size: 14px; border-radius: 100px; box-shadow: 0 8px 24px rgba(0,101,248,0.35); display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
 .float-btn:hover { transform: translateY(-2px); }
 .float-btn.kakao { background: #FEE500; color: #191919; }
 .float-btn.phone { background: white; color: var(--primary); border: 1.5px solid var(--primary); }
 @media (max-width: 600px) { .floating { right: 12px; bottom: 12px; } .float-btn { padding: 11px 15px; font-size: 13px; } }
+
+/* 모바일 가독성 개선 */
+@media (max-width: 600px) {
+  body { font-size: 18px; line-height: 1.78; }
+  .section-desc { font-size: 17.5px; line-height: 1.75; }
+  .hero-sub { line-height: 1.7; }
+  .section-title { line-height: 1.3; }
+  .strength-desc, .svc-desc, .ind-content p, .reg-content, .faq-a-content, .greeting-text, .sys-block-content { font-size: 17px; line-height: 1.78; }
+  .strength-card { padding: 28px 22px; }
+  .svc-card { padding: 28px 22px; }
+  .sys-card { padding: 28px 22px; }
+  .reg-card { padding: 22px 20px; }
+  .faq-q { font-size: 17px; padding: 20px 18px; }
+  .faq-a { padding: 0 18px; }
+  .faq-item.open .faq-a { padding: 0 18px 20px; }
+  .diag-question { font-size: 20px; }
+  .diag-option { font-size: 16px; }
+}
+
+/* 모바일 하단 고정 CTA 바 */
+.mobile-cta { display: none; }
+@media (max-width: 600px) {
+  .mobile-cta { display: grid; grid-template-columns: repeat(4, 1fr); position: fixed; left: 0; right: 0; bottom: 0; z-index: 95; background: #fff; border-top: 1px solid var(--line); box-shadow: 0 -4px 16px rgba(10,14,26,0.10); padding-bottom: env(safe-area-inset-bottom, 0); }
+  .mcta { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; padding: 9px 4px 10px; font-size: 11.5px; font-weight: 800; color: var(--text-mid); border-right: 1px solid var(--line); line-height: 1.2; text-align: center; }
+  .mcta:last-child { border-right: none; }
+  .mcta .mcta-ico { font-size: 19px; line-height: 1; }
+  .mcta.quote { background: var(--primary); color: #fff; }
+  .mcta.kakao { background: #FEE500; color: #191919; }
+  /* 우하단 세로 플로팅과 중복되지 않도록 모바일에서는 고정 바만 노출 */
+  .floating { display: none; }
+  body { padding-bottom: 66px; }
+}
 </style>
+
+<!-- 구조화 데이터: LegalService · BreadcrumbList · FAQPage -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "LegalService",
+      "@id": "https://beyondcpa.github.io/subsidy/#legalservice",
+      "name": "보조금 사업비 정산 전문 센터",
+      "description": "국고·지방보조금, 위탁사업비, R&D 과제 정산검증 및 보조사업자 회계감사 전문. 삼일회계법인 감사본부 출신 공인회계사.",
+      "url": "https://beyondcpa.github.io/subsidy/",
+      "telephone": "+82-10-9691-0177",
+      "email": "woody@beyondcpa.co.kr",
+      "image": "https://beyondcpa.github.io/subsidy/team.png",
+      "areaServed": "KR",
+      "priceRange": "￦￦",
+      "parentOrganization": { "@type": "Organization", "name": "비욘드넘버", "url": "https://www.beyondcpa.co.kr" },
+      "serviceType": ["보조금 사업비 정산검증", "보조사업자 회계감사", "R&D 과제 정산검증"]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "비욘드넘버", "item": "https://www.beyondcpa.co.kr" },
+        { "@type": "ListItem", "position": 2, "name": "보조금 사업비 정산 전문 센터", "item": "https://beyondcpa.github.io/subsidy/" }
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        { "@type": "Question", "name": "정산검증은 어떻게 의뢰하나요?", "acceptedAnswer": { "@type": "Answer", "text": "하단 견적 문의 폼, 카카오톡 채널, 또는 전화(010-9691-0177)로 연락 주시면 담당 회계사가 직접 상담 후 진행합니다." } },
+        { "@type": "Question", "name": "제출 기한을 놓치면 어떻게 되나요?", "acceptedAnswer": { "@type": "Answer", "text": "기한 경과 시 발주처는 환수, 향후 사업 참여 제한 등 제재를 취할 수 있습니다. 기한이 임박했다면 신속히 연락 주시기 바랍니다." } },
+        { "@type": "Question", "name": "국고와 지방보조금은 무엇이 다른가요?", "acceptedAnswer": { "@type": "Answer", "text": "국고는 보조금법 §27 적용·보조사업 건별 1억 이상·e나라도움, 지방은 지방보조금법 §17 적용·보조사업 건별 3억 이상·보탬e. 근거 법령·기준·시스템이 모두 다릅니다." } },
+        { "@type": "Question", "name": "환수가 발생하는 가장 흔한 원인은?", "acceptedAnswer": { "@type": "Answer", "text": "①적격증빙 누락(3만원 초과 거래), ②목적 외 사용, ③인건비 안분 오류, ④사업계획 변경 미보고, ⑤집행 한도 초과가 대표적입니다." } },
+        { "@type": "Question", "name": "정산검증과 회계감사는 어떻게 다른가요?", "acceptedAnswer": { "@type": "Answer", "text": "정산검증은 보조사업 건별(추가·변경 교부분 합산) 1억(국고)/3억(지방) 기준의 사업비 검증이고, 회계감사는 사업자가 받은 보조금 전체 총액 10억 이상일 때 적용되는 기관 재무제표 감사입니다. 의무 기준·범위·결과물이 다릅니다." } },
+        { "@type": "Question", "name": "지방보조금 3억 미만이면 검증 안 해도 되나요?", "acceptedAnswer": { "@type": "Answer", "text": "법정 의무는 보조사업 건별 3억 이상이지만, 발주 지자체가 자체 지침으로 더 낮은 금액부터 검증을 요구하는 경우가 많습니다." } },
+        { "@type": "Question", "name": "추가 교부분도 검증 대상에 포함되나요?", "acceptedAnswer": { "@type": "Answer", "text": "예. 보조사업 건별 기준이므로 같은 사업의 추가·변경 교부분을 모두 합산해 의무 여부를 판단합니다." } },
+        { "@type": "Question", "name": "R&D 정산은 일반 보조금과 다른가요?", "acceptedAnswer": { "@type": "Answer", "text": "예. 직접비·간접비 구분, 연구원 인건비 산정, 연구장비비 처리 등 특수 규정이 적용되며 NTIS 등 별도 시스템도 사용합니다." } },
+        { "@type": "Question", "name": "적격증빙으로 인정 안 되는 사례는?", "acceptedAnswer": { "@type": "Answer", "text": "3만원 초과 거래의 간이영수증, 사업 목적과 무관한 거래, 사업기간 외 거래 등이 대표적입니다." } },
+        { "@type": "Question", "name": "검증 소요 기간은 얼마인가요?", "acceptedAnswer": { "@type": "Answer", "text": "사업 규모·복잡도에 따라 다르지만 일반적으로 수임 후 1주일~4주. 자료 제출이 빠르면 더 단축됩니다." } },
+        { "@type": "Question", "name": "전국 어디서나 의뢰 가능한가요?", "acceptedAnswer": { "@type": "Answer", "text": "예. 자료 송수신은 전국 비대면 처리되어 전국 어디서나 의뢰 가능합니다." } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -487,7 +629,7 @@ section { padding: 80px 0; }
     </a>
     <div class="nav-actions">
       <a href="#downloads" class="nav-link">자료실</a>
-      <a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener" class="nav-home">🏠 홈페이지</a>
+      <a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener" class="nav-home">홈페이지</a>
       <a href="#quote" class="nav-cta">빠른 견적문의 →</a>
     </div>
   </div>
@@ -497,14 +639,15 @@ section { padding: 80px 0; }
 <section class="hero">
   <div class="hero-inner">
     <div class="hero-badge">삼일회계법인 출신 공인회계사 · 보조금 사업비 정산 전문</div>
-    <h1>보조금 정산검증, 합리적인 비용으로<br><span>환수 없이</span> 정확하게.</h1>
+    <h1>보조금 정산 검증, <span class="hl-cost">합리적인 비용</span>으로<br><span>환수 없이</span> 정확하게.</h1>
+    <p class="hero-lead">보조금 전문 회계법인 회계사가 함께 합니다.</p>
     <p class="hero-sub">
       국고·지방보조금, 위탁사업비, R&D 과제 정산검증 전문.<br>
-      삼일회계법인 출신 공인회계사가 <strong>합리적인 비용으로</strong> 독립적·객관적으로 검증해, 정산보고서의 정확성과 신뢰성을 확보해 드립니다.
+      삼일회계법인 출신 공인회계사가 <span class="hl-cost">합리적인 비용</span>으로 독립적·객관적으로 검증해, 정산보고서의 정확성과 신뢰성을 확보해 드립니다.
     </p>
     <div class="hero-ctas">
       <a href="#quote" class="btn btn-primary">빠른 견적문의 →</a>
-      <a href="#" onclick="openKakao(event)" class="btn btn-kakao">💬 카톡문의</a>
+      <a href="#" onclick="openKakao(event)" class="btn btn-kakao js-kakao">💬 카톡문의</a>
       <a href="tel:01096910177" class="btn btn-ghost">☏ 010-9691-0177</a>
     </div>
     <div class="hero-stats">
@@ -512,6 +655,23 @@ section { padding: 80px 0; }
       <div><div class="stat-num"><span data-count="2">2</span>H</div><div class="stat-label">평균 견적 회신 시간</div></div>
       <div><div class="stat-num sm">삼일회계법인</div><div class="stat-label">감사본부 출신 회계사로만 구성</div></div>
       <div><div class="stat-num sm">모든 부처</div><div class="stat-label">응대 가능 · 중앙·지자체·공공기관</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 결정촉진 블록 -->
+<section class="urgent">
+  <div class="container">
+    <h2 class="urgent-head">이런 경우, 지금 바로 문의하세요</h2>
+    <div class="urgent-grid">
+      <div class="urgent-card"><div class="uc-no">1</div><div class="uc-txt">정산·실적보고 마감이 1개월 이내로 임박했다</div></div>
+      <div class="urgent-card"><div class="uc-no">2</div><div class="uc-txt">발주처(부처·지자체)가 검증보고서 제출을 요구했다</div></div>
+      <div class="urgent-card"><div class="uc-no">3</div><div class="uc-txt">보조사업비가 국고 1억 / 지방 3억을 초과한다</div></div>
+      <div class="urgent-card"><div class="uc-no">4</div><div class="uc-txt">환수·감액·소명자료 통보를 받았다</div></div>
+    </div>
+    <div class="urgent-cta">
+      <a href="#quote" class="btn btn-primary">빠른 견적문의 →</a>
+      <span class="urgent-note">24시간 내 회신</span>
     </div>
   </div>
 </section>
@@ -594,7 +754,7 @@ section { padding: 80px 0; }
   <div class="container">
     <div class="section-head">
       <div class="section-tag">CRITERIA</div>
-      <h2 class="section-title">국고와 지방, 기준이 다릅니다</h2>
+      <h2 class="section-title">국고보조금과 지방보조금, 기준이 다릅니다</h2>
       <p class="section-desc">정산검증은 국고·지방보조금의 근거 법령·금액 기준·관리 시스템이 모두 다릅니다. 우리 사업의 기준을 확인하세요.</p>
     </div>
     <div class="criteria-table">
@@ -602,35 +762,35 @@ section { padding: 80px 0; }
         <div class="cri-cell head gold">구분</div>
         <div class="cri-cell head">국고보조금</div>
         <div class="cri-cell head">지방보조금</div>
-        <div class="cri-cell head gold">위탁 / R&D</div>
+        <div class="cri-cell head">민간위탁, 각종 재단 및 사단, R&D 등</div>
       </div>
       <div class="cri-row">
         <div class="cri-cell label">근거 법령</div>
-        <div class="cri-cell">보조금 관리에 관한 법률 <span class="em">§27</span></div>
-        <div class="cri-cell">지방보조금 관리에 관한 법률 <span class="em">§17</span></div>
-        <div class="cri-cell">협약·개별 법령</div>
+        <div class="cri-cell" data-h="국고보조금">보조금 관리에 관한 법률 <span class="em">§27</span></div>
+        <div class="cri-cell" data-h="지방보조금">지방보조금 관리에 관한 법률 <span class="em">§17</span></div>
+        <div class="cri-cell" data-h="민간위탁, 각종 재단 및 사단, R&D 등">협약/개별 법령 등 상위기관 요구시</div>
       </div>
       <div class="cri-row">
         <div class="cri-cell label">검증 기준</div>
-        <div class="cri-cell">총액 <span class="em">1억 원 이상</span></div>
-        <div class="cri-cell">총액 <span class="em">3억 원 이상</span></div>
-        <div class="cri-cell">금액 기준 없음<small>원천이 국고·지방보조금이거나 상위기관 요구 시 <span class="em">필수</span></small></div>
+        <div class="cri-cell" data-h="국고보조금">보조사업 <span class="em">건별 1억 원 이상 필수</span><small>같은 사업의 추가·변경 교부분 합산 / 필요시 이하 금액도 검증대상</small></div>
+        <div class="cri-cell" data-h="지방보조금">보조사업 <span class="em">건별 3억 원 이상 필수</span><small>같은 사업의 추가·변경 교부분 합산 / 필요시 이하 금액도 검증대상</small></div>
+        <div class="cri-cell" data-h="민간위탁, 각종 재단 및 사단, R&D 등">금액 기준 없음<small>원천이 국고·지방보조금이거나 상위기관 요구 시 <span class="em">필수</span></small></div>
       </div>
       <div class="cri-row">
         <div class="cri-cell label">관리 시스템</div>
-        <div class="cri-cell"><span class="em">e나라도움</span></div>
-        <div class="cri-cell"><span class="em">보탬e</span></div>
-        <div class="cri-cell">NTIS 등</div>
+        <div class="cri-cell" data-h="국고보조금"><span class="em">e나라도움</span></div>
+        <div class="cri-cell" data-h="지방보조금"><span class="em">보탬e</span></div>
+        <div class="cri-cell" data-h="민간위탁, 각종 재단 및 사단, R&D 등">NTIS 등</div>
       </div>
       <div class="cri-row">
         <div class="cri-cell label">제출 기한</div>
-        <div class="cri-cell">실적보고 사유 발생일로부터 <span class="em">2개월</span><small>(지자체장 3개월)</small></div>
-        <div class="cri-cell">실적보고 사유 발생일로부터 <span class="em">2개월</span></div>
-        <div class="cri-cell">과제 종료 후 별도 정산</div>
+        <div class="cri-cell" data-h="국고보조금">실적보고 사유 발생일로부터 <span class="em">2개월</span></div>
+        <div class="cri-cell" data-h="지방보조금">실적보고 사유 발생일로부터 <span class="em">2개월</span></div>
+        <div class="cri-cell" data-h="민간위탁, 각종 재단 및 사단, R&D 등">과제 종료 후 별도 정산</div>
       </div>
       <div class="cri-row">
         <div class="cri-cell label">회계감사</div>
-        <div class="cri-cell" style="grid-column: span 3;">연간 수령 보조금 총액 <strong>10억 원 이상</strong> 기관은 회계감사 의무 별도 적용 <span class="em">(법 개정 추진으로 10억 → 3억까지 확대 예정)</span></div>
+        <div class="cri-cell" style="grid-column: span 3;">사업자가 받은 <strong>보조금 전체 총액(연간 수령) 10억 원 이상</strong> 기관은 회계감사 의무 별도 적용</div>
       </div>
     </div>
   </div>
@@ -646,7 +806,7 @@ section { padding: 80px 0; }
         <p class="section-desc">
           각종 규정 및 회계 기준을 준수하며, 보조금 정산보고서의 정확성과 신뢰성을 확보합니다.
           국내 최대 규모 <strong>삼일회계법인 감사 본부 출신 고연차 공인회계사</strong>로 구성된 전문팀이
-          보조금 사업비 정산검증을 직접 수행하며, <strong>합리적인 비용</strong>으로 제공합니다.
+          보조금 사업비 정산검증을 직접 수행하며, <span class="hl-cost">합리적인 비용</span>으로 제공합니다.
         </p>
       </div>
       <div class="pos-visual">
@@ -708,13 +868,13 @@ section { padding: 80px 0; }
   <div class="container">
     <div class="greeting-grid">
       <div class="greeting-photo">
-        <img src="expert.png" alt="보조금 사업비 정산 검증 담당 공인회계사" onerror="this.parentElement.classList.add('noimg');this.remove();">
+        <img src="expert.png" alt="보조금 사업비 정산 담당 공인회계사" onerror="this.parentElement.classList.add('noimg');this.remove();">
       </div>
       <div class="greeting-body">
         <div class="section-tag">인사말</div>
         <h2 class="section-title">숫자, 그 이상의 신뢰를 드립니다.</h2>
-        <p class="greeting-text">보조금 정산검증은 단순한 서류 검토가 아니라, 보조금이 사업 목적에 맞게 정확히 집행되었는지를 독립적·객관적으로 확인하는 과정입니다. 삼일회계법인 감사본부 출신 공인회계사로 구성된 전문팀이 풍부한 정산검증 경험과 시스템 이해를 바탕으로, 합리적인 비용으로 귀 기관이 환수 위험 없이 정산을 마무리할 수 있도록 끝까지 함께하겠습니다.</p>
-        <div class="greeting-sign">보조금 사업비 정산 검증 담당 <span>공인회계사</span></div>
+        <p class="greeting-text">보조금 정산검증은 단순한 서류 검토가 아니라, 보조금이 사업 목적에 맞게 정확히 집행되었는지를 독립적·객관적으로 확인하는 과정입니다. 삼일회계법인 감사본부 출신 공인회계사로 구성된 전문팀이 풍부한 정산검증 경험과 시스템 이해를 바탕으로, <span class="hl-cost">합리적인 비용</span>으로 귀 기관이 환수 위험 없이 정산을 마무리할 수 있도록 끝까지 함께하겠습니다.</p>
+        <div class="greeting-sign">보조금 사업비 정산 담당 <span>공인회계사</span></div>
         <a class="greeting-btn" href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener">비욘드넘버 홈페이지 →</a>
       </div>
     </div>
@@ -727,7 +887,7 @@ section { padding: 80px 0; }
     <div class="section-head">
       <div class="section-tag">SERVICES</div>
       <h2 class="section-title">두 가지 핵심 서비스</h2>
-      <p class="section-desc">보조금 사업비 정산검증과 보조사업자 회계감사를 <strong>합리적인 비용으로</strong> 전문 수행합니다.</p>
+      <p class="section-desc">보조금 사업비 정산검증과 보조사업자 회계감사를 <span class="hl-cost">합리적인 비용</span>으로 전문 수행합니다.</p>
     </div>
     <div class="svc-grid">
       <div class="svc-card">
@@ -736,7 +896,7 @@ section { padding: 80px 0; }
         <div class="svc-tag">보조금법 · 지방보조금법</div>
         <div class="svc-desc">정부 지원금·연구개발비 등 특정 보조금의 사용 후 정산이 필요한 경우, 사용내역을 구분하고 근거에 따른 비용 인정을 공인회계사가 검증합니다.</div>
         <ul class="svc-list">
-          <li>국고보조금 1억 이상 / 지방보조금 3억 이상</li>
+          <li>보조사업 건별 국고 1억 이상 / 지방 3억 이상 (추가·변경 교부분 합산)</li>
           <li>그 외 지원기관에서 요구하는 경우</li>
           <li>증빙 적격성·집행 적정성 검토 후 검증보고서 발급</li>
         </ul>
@@ -834,13 +994,13 @@ section { padding: 80px 0; }
     </div>
     <div class="sys-grid">
       <div class="sys-card">
-        <div class="sys-header"><div class="sys-logo logo-img"><img src="이나라도움.png" alt="e나라도움"></div><div><div class="sys-name">e나라도움</div><div class="sys-tagline">국고보조금 통합관리시스템</div></div></div>
+        <div class="sys-header"><div class="sys-logo logo-img"><img src="enaradoum.png" alt="e나라도움"></div><div><div class="sys-name">e나라도움</div><div class="sys-tagline">국고보조금 통합관리시스템</div></div></div>
         <div class="sys-block"><div class="sys-block-label">시스템 개요</div><div class="sys-block-content">중앙부처 국고보조사업의 교부·집행·정산을 통합 관리. 모든 국고보조사업은 e나라도움을 통한 처리가 원칙입니다.</div></div>
         <div class="sys-block"><div class="sys-block-label">자주 발생 오류</div><div class="sys-block-content"><ul><li>증빙 첨부 누락·형식 오류</li><li>집행내역·증빙 금액 불일치</li><li>사업비 변경 보고 누락</li></ul></div></div>
         <div class="sys-block"><div class="sys-block-label">우리의 대응</div><div class="sys-block-content">정산검증 과정에서 시스템 입력·증빙 정합성을 일괄 확인하고, 오류 발견 시 보완 방향을 안내합니다.</div></div>
       </div>
       <div class="sys-card">
-        <div class="sys-header"><div class="sys-logo logo-img"><img src="보탬e.png" alt="보탬e"></div><div><div class="sys-name">보탬e</div><div class="sys-tagline">지방보조금 관리시스템</div></div></div>
+        <div class="sys-header"><div class="sys-logo logo-img"><img src="boteme.png" alt="보탬e"></div><div><div class="sys-name">보탬e</div><div class="sys-tagline">지방보조금 관리시스템</div></div></div>
         <div class="sys-block"><div class="sys-block-label">시스템 개요</div><div class="sys-block-content">광역·기초 지자체 지방보조사업의 교부·집행·정산 관리. 지방보조금은 보탬e를 통한 처리가 원칙입니다.</div></div>
         <div class="sys-block"><div class="sys-block-label">자주 발생 오류</div><div class="sys-block-content"><ul><li>지자체별 세부 지침 미숙지</li><li>집행 시기·항목별 한도 위반</li><li>정산보고서 양식 오류</li></ul></div></div>
         <div class="sys-block"><div class="sys-block-label">우리의 대응</div><div class="sys-block-content">발주 지자체별 정산지침을 검토하고, 검증 시점에 시스템 정합성을 확인해 정확한 정산을 완수합니다.</div></div>
@@ -871,7 +1031,7 @@ section { padding: 80px 0; }
   <div class="container">
     <div class="section-head center">
       <div class="section-tag">TRACK RECORD</div>
-      <h2 class="section-title">전 부처·전 지자체 검증 수행</h2>
+      <h2 class="section-title">다양한 부처, 지자체의 보조금 정산 검증 수행</h2>
       <p class="section-desc">중앙부처 산하 공단·진흥원부터 광역·기초 지자체, 공공기관 산하 재단, R&D 사업까지.</p>
     </div>
     <div class="record-stat">
@@ -987,33 +1147,33 @@ section { padding: 80px 0; }
   <div class="container">
     <div class="section-head">
       <div class="section-tag">REGULATIONS</div>
-      <h2 class="section-title">정산검증의 법적 근거</h2>
+      <h2 class="section-title">보조금 사업비 정산 검증의 법적 근거</h2>
       <p class="section-desc">정산검증은 임의 절차가 아닌 법령상 의무입니다.</p>
     </div>
     <div class="reg-grid">
       <div class="reg-card">
         <div class="reg-cite">보조금 관리에 관한 법률 §27</div>
         <div class="reg-title">국고보조금 검증 의무</div>
-        <div class="reg-content">보조사업 총액 <strong>1억 원 이상</strong>은 정산보고서에 대한 공인회계사·회계법인 검증을 받아야 합니다.</div>
-        <div class="reg-practice"><b>실무:</b> 총액 기준이므로 추가 교부분도 합산. 의무 누락 시 환수 사유.</div>
+        <div class="reg-content">개별 보조사업 <strong>건별 1억 원 이상</strong>은 정산보고서에 대한 공인회계사·회계법인 검증을 받아야 합니다.</div>
+        <div class="reg-practice"><b>실무:</b> 사업 건별 기준이며 같은 사업의 추가·변경 교부분은 합산합니다. (사업자가 받은 전체 보조금 총액이 아니라 해당 사업 단위로 판단) 의무 누락 시 환수 사유.</div>
       </div>
       <div class="reg-card">
         <div class="reg-cite">지방보조금 관리에 관한 법률 §17</div>
         <div class="reg-title">지방보조금 검증 의무</div>
-        <div class="reg-content">지방보조금 총액 <strong>3억 원 이상</strong>은 정산보고서에 대한 검증이 의무화되어 있습니다.</div>
-        <div class="reg-practice"><b>실무:</b> 지자체별 추가 지침 존재. 발주처별 가이드 별도 확인.</div>
+        <div class="reg-content">개별 지방보조사업 <strong>건별 3억 원 이상</strong>은 정산보고서에 대한 검증이 의무화되어 있습니다.</div>
+        <div class="reg-practice"><b>실무:</b> 사업 건별 기준(추가·변경 교부분 합산)이며, 지자체별 자체 지침으로 더 낮은 금액부터 요구하기도 합니다. 발주처별 가이드 별도 확인.</div>
       </div>
       <div class="reg-card">
         <div class="reg-cite">보조금법 시행령</div>
         <div class="reg-title">제출 기한</div>
-        <div class="reg-content">정산보고서는 <strong>실적보고 사유 발생일로부터 2개월 이내</strong> 제출(지자체장 3개월).</div>
+        <div class="reg-content">정산보고서는 <strong>실적보고 사유 발생일로부터 2개월 이내</strong> 제출.</div>
         <div class="reg-practice"><b>실무:</b> 기한 경과 시 환수·제재 위험. 사업 종료 직후 수임 권장.</div>
       </div>
       <div class="reg-card">
         <div class="reg-cite">보조금법 시행령</div>
-        <div class="reg-title">회계감사 의무</div>
-        <div class="reg-content">연간 수령 보조금 총액 <strong>10억 원 이상</strong> 기관은 회계감사 의무 별도 적용.</div>
-        <div class="reg-practice"><b>실무:</b> 법 개정 추진으로 대상이 10억 → 3억까지 확대 예정.</div>
+        <div class="reg-title">재무제표에 대한 회계감사 의무</div>
+        <div class="reg-content">사업자가 받은 <strong>보조금 전체 총액(연간 수령) 10억 원 이상</strong> 기관은 회계감사 의무 별도 적용.</div>
+        <div class="reg-practice"><b>실무:</b> 사업 건별 검증(1억/3억)과 달리, 한 사업자가 받은 보조금 전체를 합산한 기준입니다. 법 개정 추진으로 대상이 10억 → 3억까지 확대 예정.</div>
       </div>
     </div>
   </div>
@@ -1025,11 +1185,11 @@ section { padding: 80px 0; }
     <div class="section-head center">
       <div class="section-tag">DOWNLOAD</div>
       <h2 class="section-title">보조금 정산 자료실 · 양식 다운로드</h2>
-      <p class="section-desc">정산보고서·검증보고서 작성에 필요한 <strong>최신 법령 지침과 별지 서식</strong>을 무료로 내려받으실 수 있습니다. (2026년 개정 작성지침 기준)</p>
+      <p class="section-desc">정산보고서·검증보고서 작성에 필요한 <strong>최신 법령 지침과 별지 서식</strong></p>
     </div>
 
-    <div class="dl-group open">
-      <button class="dl-group-title" onclick="toggleDl(this)" aria-expanded="true">📘 법령 · 지침 (정부 공고 전문)<span class="dl-toggle">+</span></button>
+    <div class="dl-group">
+      <button class="dl-group-title" onclick="toggleDl(this)" aria-expanded="false">📘 법령 · 지침 (정부 공고 전문)<span class="dl-toggle">+</span></button>
       <div class="dl-body-wrap">
       <div class="dl-grid">
         <a class="dl-card" href="자료실/작성지침_실적정산보고서_2026.pdf" download>
@@ -1116,19 +1276,46 @@ section { padding: 80px 0; }
     <div class="section-head center">
       <div class="section-tag">FAQ</div>
       <h2 class="section-title">자주 묻는 질문</h2>
+      <button class="collapse-btn" onclick="toggleCollapse(this)" data-open-label="질문 접기" data-close-label="자주 묻는 질문 펼쳐보기" aria-expanded="false"><span class="cb-label">자주 묻는 질문 펼쳐보기</span> <span class="cb-ico">▾</span></button>
     </div>
+    <div class="collapse-wrap">
     <div class="faq-list">
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">정산검증은 어떻게 의뢰하나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">하단 견적 문의 폼, 카카오톡 채널, 또는 전화(010-9691-0177)로 연락 주시면 담당 회계사가 직접 상담 후 진행합니다.</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">제출 기한을 놓치면 어떻게 되나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">기한 경과 시 발주처는 환수, 향후 사업 참여 제한 등 제재를 취할 수 있습니다. 기한이 임박했다면 <strong>신속히 연락</strong> 주시기 바랍니다.</div></div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">국고와 지방보조금은 무엇이 다른가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content"><strong>국고</strong>는 보조금법 §27 적용·1억 이상·e나라도움, <strong>지방</strong>은 지방보조금법 §17 적용·3억 이상·보탬e. 근거 법령·기준·시스템이 모두 다릅니다.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">국고와 지방보조금은 무엇이 다른가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content"><strong>국고</strong>는 보조금법 §27 적용·보조사업 건별 1억 이상·e나라도움, <strong>지방</strong>은 지방보조금법 §17 적용·보조사업 건별 3억 이상·보탬e. 근거 법령·기준·시스템이 모두 다릅니다.</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">환수가 발생하는 가장 흔한 원인은?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">①적격증빙 누락(3만원 초과 거래), ②목적 외 사용, ③인건비 안분 오류, ④사업계획 변경 미보고, ⑤집행 한도 초과가 대표적입니다.</div></div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">정산검증과 회계감사는 어떻게 다른가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content"><strong>정산검증</strong>은 보조사업비 한정 검증(1억/3억+), <strong>회계감사</strong>는 기관 전체 재무제표 감사(연 10억+). 의무 기준·범위·결과물이 다릅니다.</div></div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">지방보조금 3억 미만이면 검증 안 해도 되나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">법정 의무는 3억 이상이지만, <strong>발주 지자체가 자체 지침으로 더 낮은 금액부터 검증을 요구</strong>하는 경우가 많습니다.</div></div></div>
-      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">추가 교부분도 검증 대상에 포함되나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">예. 보조사업비 <strong>총액 기준</strong>이므로 추가·변경 교부분 모두 합산해 의무 여부를 판단합니다.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">정산검증과 회계감사는 어떻게 다른가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content"><strong>정산검증</strong>은 보조사업 <strong>건별</strong>(추가·변경 교부분 합산) 1억(국고)/3억(지방) 기준의 사업비 검증이고, <strong>회계감사</strong>는 사업자가 받은 <strong>보조금 전체 총액</strong> 10억 이상일 때 적용되는 기관 재무제표 감사입니다. 의무 기준·범위·결과물이 다릅니다.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">지방보조금 3억 미만이면 검증 안 해도 되나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">법정 의무는 보조사업 건별 3억 이상이지만, <strong>발주 지자체가 자체 지침으로 더 낮은 금액부터 검증을 요구</strong>하는 경우가 많습니다.</div></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">추가 교부분도 검증 대상에 포함되나요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">예. 보조사업 <strong>건별 기준</strong>이므로 같은 사업의 추가·변경 교부분을 모두 합산해 의무 여부를 판단합니다. (여러 사업을 합친 전체 총액 기준이 아닙니다.)</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">R&D 정산은 일반 보조금과 다른가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">예. <strong>직접비·간접비 구분, 연구원 인건비 산정, 연구장비비 처리</strong> 등 특수 규정이 적용되며 NTIS 등 별도 시스템도 사용합니다.</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">적격증빙으로 인정 안 되는 사례는?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">3만원 초과 거래의 간이영수증, 사업 목적과 무관한 거래, 사업기간 외 거래 등이 대표적입니다.</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">검증 소요 기간은 얼마인가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">사업 규모·복잡도에 따라 다르지만 일반적으로 <strong>수임 후 1주일 ~ 4주</strong>. 자료 제출이 빠르면 더 단축됩니다.</div></div></div>
       <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)">전국 어디서나 의뢰 가능한가요?<span class="faq-icon">+</span></div><div class="faq-a"><div class="faq-a-content">예. 자료 송수신은 <strong>전국 비대면 처리</strong>되어 전국 어디서나 의뢰 가능합니다.</div></div></div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- 용어 사전 -->
+<section class="glossary" id="glossary">
+  <div class="container">
+    <div class="section-head center">
+      <div class="section-tag">GLOSSARY</div>
+      <h2 class="section-title">보조금 용어 사전</h2>
+      <p class="section-desc">보조금 정산·검증에서 자주 쓰이는 핵심 용어를 정리했습니다.</p>
+      <button class="collapse-btn" onclick="toggleCollapse(this)" data-open-label="용어 사전 접기" data-close-label="용어 사전 펼쳐보기" aria-expanded="false"><span class="cb-label">용어 사전 펼쳐보기</span> <span class="cb-ico">▾</span></button>
+    </div>
+    <div class="collapse-wrap">
+    <div class="gloss-list">
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">민간이전</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">국가·지자체가 민간 부문(법인·단체·개인)에 <strong>반대급부 없이</strong> 지급하는 경비입니다. 예산과목상 민간경상보조·민간자본보조 등으로 분류되며, 보조금의 대표적 형태에 해당합니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">보조사업</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">국가·지자체로부터 <strong>보조금을 교부받아 수행하는 사무·사업</strong>입니다. 보조사업자는 교부 목적과 조건에 따라 집행하고, 종료 후 정산·보고할 의무를 집니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">민간위탁</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">행정기관의 사무 일부를 법인·단체·개인에게 맡겨 수행하게 하는 것입니다. 위탁사업비는 협약과 개별 법령·지침에 따라 정산하며, <strong>재원이 보조금이면 정산검증 대상</strong>이 됩니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">부담금(자부담)</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">보조사업 총사업비 중 보조금 외에 <strong>보조사업자가 자체 재원으로 부담</strong>하는 금액입니다. 자부담 집행분도 정산·검증 범위에 포함되는 것이 일반적입니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">특정사업자</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">보조금 교부 대상으로 <strong>지정된 특정 보조사업자</strong>를 말합니다. 공모·지정 절차를 거쳐 선정되며, 교부 결정에 명시된 조건을 준수해야 합니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">간접보조사업자</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">보조사업자로부터 <strong>다시 보조금을 받아(재교부)</strong> 사업의 일부를 수행하는 자입니다. 간접보조금에도 목적 외 사용 금지·정산 의무가 동일하게 적용됩니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">정산보고서</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">보조사업 종료 후 보조금의 <strong>수입·집행 내역을 비목별로 정리</strong>해 제출하는 보고서입니다. 실적보고서와 함께 제출되며 검증·정산의 기초 자료가 됩니다.</div></div></div>
+      <div class="gloss-item"><button class="gloss-q" onclick="toggleGloss(this)" aria-expanded="false"><h3 class="gloss-term">검증보고서</h3><span class="gloss-icon">+</span></button><div class="gloss-a"><div class="gloss-a-content">공인회계사·회계법인이 <strong>정산보고서의 적정성을 독립적으로 검증</strong>한 결과를 담은 보고서입니다. 증빙 적격성·집행 적정성을 확인하며, 발주처 제출용 공식 서류입니다.</div></div></div>
+    </div>
     </div>
   </div>
 </section>
@@ -1141,29 +1328,40 @@ section { padding: 80px 0; }
       <h2 class="section-title">빠른 견적문의</h2>
       <p class="section-desc">정보를 남겨주시면 담당 회계사가 직접 연락드려 정확한 견적과 일정을 안내합니다.</p>
     </div>
+    <!--
+      [견적 폼 전송 안내]
+      이 폼은 서버리스 폼 서비스 'FormSubmit'을 통해 woody@beyondcpa.co.kr 로 전송됩니다.
+      (별도 백엔드 불필요 · Formspree와 동일한 방식의 서비스)
+      ▸ 전송 로직은 파일 하단 <script>의 submitQuote() 함수 참고.
+      ▸ 받는 이메일 변경: submitQuote() 안의 fetch URL
+            https://formsubmit.co/ajax/받는메일주소  부분을 수정.
+      ▸ (대안) Formspree로 바꾸려면: 아래 form 태그를
+            <form action="https://formspree.io/f/FORM_ID_HERE" method="POST">
+        로 바꾸고 각 input의 name 속성(이미 부여됨)을 그대로 사용하면 됩니다.
+    -->
     <form class="quote-form" id="quoteForm" onsubmit="return submitQuote(event)">
       <div class="form-row">
         <div class="form-group"><div class="form-label">기관/회사명 <span class="req">*</span></div><input type="text" name="org" class="form-input" required placeholder="예: ○○재단"></div>
-        <div class="form-group"><div class="form-label">담당자명 <span class="req">*</span></div><input type="text" name="name" class="form-input" required placeholder="홍길동"></div>
+        <div class="form-group"><div class="form-label">담당자명</div><input type="text" name="name" class="form-input" placeholder="홍길동"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><div class="form-label">연락처 <span class="req">*</span></div><input type="tel" name="phone" class="form-input" required placeholder="010-0000-0000"></div>
         <div class="form-group"><div class="form-label">이메일</div><input type="email" name="email" class="form-input" placeholder="contact@example.com"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><div class="form-label">사업 종류 <span class="req">*</span></div>
-          <select name="type" class="form-select" required>
+        <div class="form-group"><div class="form-label">사업 종류</div>
+          <select name="type" class="form-select">
             <option value="">선택해주세요</option>
-            <option value="국고보조금">국고보조금 정산검증</option>
-            <option value="지방보조금">지방보조금 정산검증</option>
+            <option value="국고보조금">국고보조금 정산 검증</option>
+            <option value="지방보조금">지방보조금 정산 검증</option>
             <option value="위탁사업">위탁사업비 정산</option>
             <option value="R&D">R&D 정산</option>
             <option value="외부감사">보조사업자 회계감사</option>
             <option value="기타">기타 / 상담 필요</option>
           </select>
         </div>
-        <div class="form-group"><div class="form-label">사업비 규모 <span class="req">*</span></div>
-          <select name="scale" class="form-select" required>
+        <div class="form-group"><div class="form-label">사업비 규모</div>
+          <select name="scale" class="form-select">
             <option value="">선택해주세요</option>
             <option value="1억 미만">1억 원 미만</option>
             <option value="1~3억">1억 ~ 3억 원</option>
@@ -1175,6 +1373,10 @@ section { padding: 80px 0; }
         </div>
       </div>
       <div class="form-group full"><div class="form-label">추가 사항 · 일정</div><textarea name="memo" class="form-textarea" placeholder="사업 개요, 정산 마감 예정일, 기타 요청사항을 자유롭게 적어주세요."></textarea></div>
+      <label class="form-consent">
+        <input type="checkbox" name="privacy_consent" value="동의" required>
+        <span><strong>[개인정보 수집·이용 동의]</strong> <span class="req">*</span> 견적 상담을 위해 기관/회사명, 담당자명, 연락처, 이메일 등을 수집하며, 상담·견적 안내 목적 달성 후 파기합니다. 자세한 내용은 <a href="privacy.html" target="_blank" rel="noopener">개인정보처리방침</a>을 확인하세요.</span>
+      </label>
       <button type="submit" class="form-submit">문의 보내기 →</button>
       <p class="form-note">제출 정보는 견적 검토 외 다른 용도로 사용되지 않습니다.</p>
     </form>
@@ -1203,20 +1405,28 @@ section { padding: 80px 0; }
         <div class="footer-slogan">숫자, 그 이상의 가치</div>
         <div class="footer-info">비욘드넘버<br><strong>대표전화 · 010-9691-0177</strong><br>전국 비대면 의뢰 가능<br>이메일 · woody@beyondcpa.co.kr</div>
       </div>
-      <div><h4>서비스</h4><ul><li>국고보조금 정산검증</li><li>지방보조금 정산검증</li><li>위탁사업비 정산</li><li>R&D 정산검증</li><li>보조사업자 회계감사</li></ul></div>
-      <div><h4>바로가기</h4><ul><li><a href="#downloads">자료실 · 양식 다운로드</a></li><li><a href="#quote">빠른 견적문의</a></li><li><a href="tel:01096910177">전화 상담</a></li><li><a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener">비욘드넘버 홈페이지</a></li></ul></div>
+      <div><h4>서비스</h4><ul><li>국고보조금 정산 검증</li><li>지방보조금 정산 검증</li><li>위탁사업비 정산</li><li>R&D 정산 검증</li><li>보조사업자 회계감사</li></ul></div>
+      <div><h4>바로가기</h4><ul><li><a href="#downloads">자료실 · 양식 다운로드</a></li><li><a href="#glossary">보조금 용어 사전</a></li><li><a href="#quote">빠른 견적문의</a></li><li><a href="tel:01096910177">전화 상담</a></li><li><a href="privacy.html">개인정보처리방침</a></li><li><a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener">비욘드넘버 홈페이지</a></li></ul></div>
     </div>
-    <div class="footer-bottom">© 보조금 사업비 정산 전문 센터. All rights reserved.</div>
+    <div class="footer-bottom">© 보조금 사업비 정산 전문 센터. All rights reserved. · <a href="privacy.html" style="color:rgba(255,255,255,0.7);font-weight:700">개인정보처리방침</a></div>
   </div>
 </footer>
 
 <!-- FLOATING -->
 <div class="floating">
   <a href="#quote" class="float-btn">빠른 견적문의</a>
-  <a href="#" onclick="openKakao(event)" class="float-btn kakao">💬 카톡문의</a>
-  <a href="tel:01096910177" class="float-btn phone">☏ 통화</a>
-  <a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener" class="float-btn site">🏠 홈페이지</a>
+  <a href="#" onclick="openKakao(event)" class="float-btn kakao js-kakao">💬 카톡문의</a>
+  <a href="tel:01096910177" class="float-btn phone">☏ 010-9691-0177</a>
+  <a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener" class="float-btn site">홈페이지</a>
 </div>
+
+<!-- 모바일 하단 고정 CTA 바 -->
+<nav class="mobile-cta" aria-label="빠른 연락">
+  <a href="tel:01096910177" class="mcta phone"><span class="mcta-ico">☏</span>전화</a>
+  <a href="#" onclick="openKakao(event)" class="mcta kakao js-kakao"><span class="mcta-ico">💬</span>카톡</a>
+  <a href="#quote" class="mcta quote"><span class="mcta-ico">✉</span>견적문의</a>
+  <a href="https://www.beyondcpa.co.kr" target="_blank" rel="noopener" class="mcta site"><span class="mcta-ico">🏠</span>홈페이지</a>
+</nav>
 
 <script>
 const diagState = { 1:'', 2:'', 3:'', 4:'' };
@@ -1257,10 +1467,10 @@ function showDiagResult() {
   // 종류 + 금액으로 판정 (status: 의무 / 가능성 / 확인 / 권장)
   let status = '권장', lawText = '';
   if (type==='국고') {
-    if (amt1plus) { status='의무'; lawText='보조금법 §27에 따른 정산검증 <strong>의무 대상</strong>입니다. (국고보조금 총액 1억 원 이상)'; }
+    if (amt1plus) { status='의무'; lawText='보조금법 §27에 따른 정산검증 <strong>의무 대상</strong>입니다. (국고보조금 보조사업 건별 1억 원 이상, 추가·변경 교부분 합산)'; }
     else { status='권장'; lawText='국고보조금 1억 원 미만으로 법정 의무는 아니나, 환수 위험 대비 자발적 검증을 권장합니다.'; }
   } else if (type==='지방') {
-    if (amt3plus) { status='의무'; lawText='지방보조금법 §17에 따른 정산검증 <strong>의무 대상</strong>입니다. (지방보조금 총액 3억 원 이상)'; }
+    if (amt3plus) { status='의무'; lawText='지방보조금법 §17에 따른 정산검증 <strong>의무 대상</strong>입니다. (지방보조금 보조사업 건별 3억 원 이상, 추가·변경 교부분 합산)'; }
     else if (amt1to3) { status='확인'; lawText='지방보조금 3억 원 미만은 법정 의무 대상은 아니지만, 발주 지자체가 자체 지침으로 검증을 요구하는 경우가 많아 확인이 필요합니다.'; }
     else { status='권장'; lawText='지방보조금 소액 사업으로 법정 의무는 아니나, 증빙 적정성 점검 차원의 검증을 권장합니다.'; }
   } else if (type==='위탁') {
@@ -1309,24 +1519,39 @@ function showIndustry(id) {
   document.getElementById('ind-'+id).classList.add('active');
 }
 function toggleFaq(el) { el.parentElement.classList.toggle('open'); }
+function toggleGloss(btn) { var item = btn.parentElement; var open = item.classList.toggle('open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
 function toggleDl(btn) { var g = btn.parentElement; var open = g.classList.toggle('open'); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); }
-function toggleCollapse(btn) { var wrap = btn.closest('.container').querySelector('.collapse-wrap'); var open = wrap.classList.toggle('open'); btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); var lbl = btn.querySelector('.cb-label'); if (lbl) lbl.textContent = open ? '사례 접기' : '사례 펼쳐보기'; }
+function toggleCollapse(btn) { var wrap = btn.closest('.container').querySelector('.collapse-wrap'); var open = wrap.classList.toggle('open'); btn.classList.toggle('open', open); btn.setAttribute('aria-expanded', open ? 'true' : 'false'); var lbl = btn.querySelector('.cb-label'); if (lbl) lbl.textContent = open ? (btn.dataset.openLabel || '사례 접기') : (btn.dataset.closeLabel || '사례 펼쳐보기'); }
+/* ── 카카오톡 채널 URL: 모든 카톡 버튼의 단일 관리 지점 ──
+   URL을 바꾸려면 아래 한 줄만 수정하면 됩니다. (미정 시 'KAKAO_CHANNEL_URL_HERE') */
 const KAKAO_CHANNEL_URL = 'http://pf.kakao.com/_hFjcG/chat';
-function openKakao(e) { e.preventDefault(); window.open(KAKAO_CHANNEL_URL, '_blank'); }
+function openKakao(e) { if (e) e.preventDefault(); window.open(KAKAO_CHANNEL_URL, '_blank', 'noopener'); }
+// .js-kakao 링크들의 href를 상수값으로 일괄 주입(스크립트 비활성 환경에서도 실제 링크로 동작)
+(function(){
+  if (KAKAO_CHANNEL_URL && KAKAO_CHANNEL_URL !== 'KAKAO_CHANNEL_URL_HERE') {
+    Array.prototype.forEach.call(document.querySelectorAll('a.js-kakao'), function(a){
+      a.setAttribute('href', KAKAO_CHANNEL_URL);
+      a.setAttribute('target', '_blank');
+      a.setAttribute('rel', 'noopener');
+    });
+  }
+})();
 function submitQuote(e) {
   e.preventDefault();
   const form = e.target;
   const btn = form.querySelector('.form-submit');
   const d = new FormData(form);
+  // 필수는 [기관/회사명]·[연락처]·[개인정보 동의] 3가지(HTML required로 처리). 나머지는 선택이며 비어 있으면 '미입력'으로 전송.
   const payload = {
-    '기관/회사명': d.get('org'),
-    '담당자': d.get('name'),
-    '연락처': d.get('phone'),
-    '이메일': d.get('email') || '-',
-    '사업 종류': d.get('type'),
-    '사업비 규모': d.get('scale'),
-    '추가 사항': d.get('memo') || '-',
-    _subject: `[견적문의] ${d.get('org')} · ${d.get('type')}`,
+    '기관/회사명': d.get('org') || '미입력',
+    '담당자': d.get('name') || '미입력',
+    '연락처': d.get('phone') || '미입력',
+    '이메일': d.get('email') || '미입력',
+    '사업 종류': d.get('type') || '미입력',
+    '사업비 규모': d.get('scale') || '미입력',
+    '추가 사항': d.get('memo') || '미입력',
+    '개인정보 수집·이용 동의': d.get('privacy_consent') || '미동의',
+    _subject: `[견적문의] ${d.get('org') || '기관미입력'} · ${d.get('type') || '종류미선택'}`,
     _template: 'table'
   };
   btn.disabled = true; btn.textContent = '전송 중...';
@@ -1353,13 +1578,13 @@ function submitQuote(e) {
 // 스크롤 등장 애니메이션 (IntersectionObserver)
 (function(){
   if (!('IntersectionObserver' in window)) return;
-  var up = document.querySelectorAll('.section-head, .strength-card, .svc-card, .reg-card, .case-card, .sys-card, .ind-content, .dl-group, .criteria-table, .record-stat, .diag-card, .quote-form, .proc-step, .faq-item');
+  var up = document.querySelectorAll('.section-head, .urgent-head, .urgent-card, .strength-card, .svc-card, .reg-card, .case-card, .sys-card, .ind-content, .dl-group, .criteria-table, .record-stat, .diag-card, .quote-form, .proc-step, .faq-item');
   Array.prototype.forEach.call(up, function(el){ el.classList.add('reveal'); });
   var heroEls = document.querySelectorAll('.hero-badge, .hero h1, .hero-sub, .hero-ctas, .hero-stats');
   Array.prototype.forEach.call(heroEls, function(el, i){ el.classList.add('reveal'); el.style.transitionDelay = (i * 0.1) + 's'; });
   Array.prototype.forEach.call(document.querySelectorAll('.positioning-grid > div:first-child, .greeting-photo'), function(el){ el.classList.add('reveal','reveal-left'); });
   Array.prototype.forEach.call(document.querySelectorAll('.pos-visual, .greeting-body'), function(el){ el.classList.add('reveal','reveal-right'); });
-  Array.prototype.forEach.call(document.querySelectorAll('.strength-grid, .svc-grid, .reg-grid, .sys-grid, .proc-steps, .case-grid, .faq-list'), function(grid){
+  Array.prototype.forEach.call(document.querySelectorAll('.urgent-grid, .strength-grid, .svc-grid, .reg-grid, .sys-grid, .proc-steps, .case-grid, .faq-list'), function(grid){
     Array.prototype.forEach.call(grid.children, function(child, i){ if (child.classList.contains('reveal')) child.style.transitionDelay = (i * 0.07) + 's'; });
   });
   var io = new IntersectionObserver(function(entries){
