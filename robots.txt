@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://beyondcpa.github.io/subsidy/sitemap.xml
