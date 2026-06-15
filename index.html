@@ -1339,17 +1339,7 @@ section { padding: 80px 0; }
             <option value="기타">기타 / 상담 필요</option>
           </select>
         </div>
-        <div class="form-group"><div class="form-label">사업비 규모</div>
-          <select name="scale" class="form-select">
-            <option value="">선택해주세요</option>
-            <option value="1억 미만">1억 원 미만</option>
-            <option value="1~3억">1억 ~ 3억 원</option>
-            <option value="3~5억">3억 ~ 5억 원</option>
-            <option value="5~10억">5억 ~ 10억 원</option>
-            <option value="10~30억">10억 ~ 30억 원</option>
-            <option value="30억 이상">30억 원 이상</option>
-          </select>
-        </div>
+        <div class="form-group"><div class="form-label">총사업비 규모</div><input type="text" name="scale" class="form-input" placeholder="예: 5억 원"></div>
       </div>
       <div class="form-group full"><div class="form-label">추가 사항 · 일정</div><textarea name="memo" class="form-textarea" placeholder="사업 개요, 정산 마감 예정일, 기타 요청사항을 자유롭게 적어주세요."></textarea></div>
       <label class="form-consent">
@@ -1527,7 +1517,7 @@ function submitQuote(e) {
     '연락처': d.get('phone') || '미입력',
     '이메일': d.get('email') || '미입력',
     '사업 종류': d.get('type') || '미입력',
-    '사업비 규모': d.get('scale') || '미입력',
+    '총사업비 규모': d.get('scale') || '미입력',
     '추가 사항': d.get('memo') || '미입력',
     '개인정보 수집·이용 동의': d.get('privacy_consent') || '미동의',
     _subject: `[견적문의] ${d.get('org') || '기관미입력'} · ${d.get('type') || '종류미선택'}`,
