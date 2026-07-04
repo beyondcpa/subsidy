@@ -80,6 +80,7 @@ section { padding: 80px 0; }
 
 /* '합리적인 비용' 강조 */
 .hl-cost { color: var(--primary); font-weight: 800; white-space: nowrap; }
+.hl-cpa { color: var(--accent); font-weight: 900; }
 
 /* NAV */
 .nav { position: sticky; top: 0; background: rgba(255,255,255,0.88); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); z-index: 100; }
@@ -132,6 +133,37 @@ section { padding: 80px 0; }
 .stat-num .accent { color: var(--primary); }
 .stat-num.sm { font-size: clamp(22px, 3vw, 31px); }
 .stat-label { font-size: 13.5px; color: var(--text-soft); font-weight: 500; }
+/* ===== 배경 동영상 ===== */
+.bg-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; pointer-events: none; }
+.bg-video-overlay { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+/* 히어로: 동영상 위 화이트 좌우 그라데이션(왼쪽 진함→오른쪽 옅음) + 어두운 텍스트 */
+.hero.has-video { background: #fff; }
+.hero.has-video .bg-video-overlay { background: linear-gradient(90deg, rgba(255,255,255,0.93) 0%, rgba(255,255,255,0.82) 38%, rgba(255,255,255,0.44) 72%, rgba(255,255,255,0.22) 100%); }
+.hero.has-video .hero-inner { position: relative; z-index: 2; }
+.hero.has-video h1, .hero.has-video .hero-lead, .hero.has-video .hero-sub, .hero.has-video .stat-num, .hero.has-video .stat-label { text-shadow: 0 1px 10px rgba(255,255,255,0.9); }
+.hero.has-video .hero-sub { color: #1e2430; }
+.hero.has-video .stat-label { color: #2c3543; font-weight: 600; }
+.hero.has-video .hl-cpa { color: var(--primary); }
+/* 히어로: 왼쪽 텍스트 + 오른쪽 사진 팝업 카드 (배경은 동영상) */
+.hero.has-video .hero-inner { display: grid; grid-template-columns: 1.25fr 0.75fr; gap: 46px; align-items: center; }
+.hero-copy { grid-column: 1; min-width: 0; }
+.hero-photo-card { grid-column: 2; justify-self: end; width: 100%; max-width: 410px; position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 4 / 3.1; box-shadow: 0 30px 70px rgba(0,0,0,0.5); border: 1px solid rgba(255,255,255,0.16); animation: heroCardFloat 6s ease-in-out infinite; }
+.hero-photo-card img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+.hero-stats { grid-column: 1 / -1; }
+@keyframes heroCardFloat { 0% { transform: translateY(0); } 50% { transform: translateY(-10px); } 100% { transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .hero-photo-card { animation: none; } }
+@media (max-width: 860px) {
+  .hero.has-video .hero-inner { grid-template-columns: 1fr; gap: 32px; }
+  .hero-photo-card { grid-column: 1; max-width: 480px; aspect-ratio: 16 / 10; }
+}
+/* 자가진단·견적: 이미 어두운 섹션 → 기존 그라데이션을 동영상 위 오버레이로 재사용 */
+.diagnose .bg-video-overlay { background: linear-gradient(180deg, rgba(10,20,40,0.72) 0%, rgba(10,20,40,0.64) 100%); }
+.quote .bg-video-overlay { background: linear-gradient(180deg, rgba(10,14,26,0.74) 0%, rgba(10,14,26,0.66) 100%); }
+.diagnose .container, .quote .container { position: relative; z-index: 2; }
+/* 모션 최소화 선호 시 정지 배경으로 대체 */
+@media (prefers-reduced-motion: reduce) { .bg-video { display: none; } }
+/* 모바일: 하단 4K 동영상은 성능을 위해 숨기고 기존 그라데이션 유지 */
+@media (max-width: 768px) { .diagnose .bg-video, .quote .bg-video { display: none; } }
 
 /* 결정촉진 블록 (히어로 직후) */
 .urgent { padding: 48px 0; background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
@@ -262,6 +294,16 @@ section { padding: 80px 0; }
 .tb-label { font-size: 13.5px; color: rgba(255,255,255,0.72); margin-top: 9px; font-weight: 500; }
 @media (min-width: 769px) { .team-band { background-attachment: fixed; } }
 @media (max-width: 600px) { .team-band-stats { gap: 28px; } .team-band { min-height: 400px; } }
+/* 오피스 갤러리 */
+.office { background: var(--bg-soft); }
+.office-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.office-card { position: relative; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); box-shadow: var(--shadow); aspect-ratio: 4/3; background: #0a0e1a; }
+.office-card img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s cubic-bezier(0.2,0.7,0.2,1); }
+.office-card:hover img { transform: scale(1.06); }
+.office-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 26px 18px 15px; background: linear-gradient(180deg, transparent, rgba(8,12,22,0.88)); color: #fff; }
+.office-cap-title { font-size: 16px; font-weight: 800; margin-bottom: 3px; }
+.office-cap-desc { font-size: 12.5px; color: rgba(255,255,255,0.82); line-height: 1.45; }
+@media (max-width: 820px) { .office-grid { grid-template-columns: 1fr; } .office-card { aspect-ratio: 16/10; } }
 
 /* SERVICES */
 .services { background: var(--bg-soft); }
@@ -641,19 +683,28 @@ section { padding: 80px 0; }
 </nav>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero has-video">
+  <video class="bg-video" autoplay muted loop playsinline preload="auto">
+    <source src="19077347-uhd_3840_2160_60fps%20(1).mp4" type="video/mp4">
+  </video>
+  <div class="bg-video-overlay"></div>
   <div class="hero-inner">
-    <div class="hero-badge">삼일회계법인 출신 공인회계사 · 보조금 사업비 정산 전문</div>
+    <div class="hero-copy">
+    <div class="hero-badge">하나회계법인 소속 · 삼일 감사본부 출신 공인회계사</div>
     <h1>보조금 정산 검증, <span class="hl-cost">합리적인 비용</span>으로<br><span>환수 없이</span> 정확하게.</h1>
-    <p class="hero-lead">보조금 전문 회계법인 회계사가 함께 합니다.</p>
+    <p class="hero-lead">보조금 전문 <span class="hl-cpa">회계법인 소속 공인회계사</span>가 직접 검증합니다.</p>
     <p class="hero-sub">
       국고·지방보조금, 위탁사업비, R&D 과제 정산 검증 전문.<br>
-      삼일회계법인 출신 공인회계사가 <span class="hl-cost">합리적인 비용</span>으로 독립적·객관적으로 검증해, 정산보고서의 정확성과 신뢰성을 확보해 드립니다.
+      <span class="hl-cpa">삼일회계법인 감사본부 출신 공인회계사</span>가 <span class="hl-cost">합리적인 비용</span>으로 독립적·객관적으로 검증해, 정산보고서의 정확성과 신뢰성을 확보해 드립니다.
     </p>
     <div class="hero-ctas">
       <a href="#quote" class="btn btn-primary">빠른 견적문의 →</a>
       <a href="#" onclick="openKakao(event)" class="btn btn-kakao js-kakao">💬 카톡문의</a>
       <a href="tel:01096910177" class="btn btn-ghost">☏ 010-9691-0177</a>
+    </div>
+    </div>
+    <div class="hero-photo-card reveal">
+      <img src="강의5.jpg" alt="보조금 정산 검증 강의 현장" loading="lazy" decoding="async">
     </div>
     <div class="hero-stats">
       <div><div class="stat-num"><span class="accent" data-count="500">500</span>+</div><div class="stat-label">누적 검증 완료 사업</div></div>
@@ -683,6 +734,10 @@ section { padding: 80px 0; }
 
 <!-- 자가진단 -->
 <section class="diagnose">
+  <video class="bg-video" muted loop playsinline preload="none">
+    <source src="12357867_3840_2160_30fps%20(1).mp4" type="video/mp4">
+  </video>
+  <div class="bg-video-overlay"></div>
   <div class="container">
     <div class="section-head center">
       <div class="section-tag">SELF-DIAGNOSIS</div>
@@ -865,6 +920,31 @@ section { padding: 80px 0; }
       <div class="tb-stat"><div class="tb-num"><span data-count="200">200</span>+</div><div class="tb-label">연간 정산 검증 수행</div></div>
       <div class="tb-stat"><div class="tb-num"><span data-count="100">100</span>%</div><div class="tb-label">삼일 감사본부 출신 CPA</div></div>
       <div class="tb-stat"><div class="tb-num">Manager↑</div><div class="tb-label">고연차가 직접 수행</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 오피스 갤러리 -->
+<section class="office">
+  <div class="container">
+    <div class="section-head center">
+      <div class="section-tag">OUR OFFICE</div>
+      <h2 class="section-title">우리 업무 공간을 소개합니다</h2>
+      <p class="section-desc">비대면 서류 검토를 상주하는 사무실에서 수행합니다.</p>
+    </div>
+    <div class="office-grid">
+      <div class="office-card reveal">
+        <img src="KakaoTalk_20260202_094030089_21.jpg" alt="회계사 집무실 – 고층 오피스 업무 공간" loading="lazy" decoding="async">
+        <div class="office-cap"><div class="office-cap-title">회계사 집무실</div><div class="office-cap-desc">담당 회계사가 직접 정산 검증 실무를 수행하는 업무 공간</div></div>
+      </div>
+      <div class="office-card reveal">
+        <img src="KakaoTalk_20260202_094030089_22.jpg" alt="방문 상담 라운지" loading="lazy" decoding="async">
+        <div class="office-cap"><div class="office-cap-title">상담 라운지</div><div class="office-cap-desc">편안한 공간에서 진행하는 1:1 대면 견적·상담</div></div>
+      </div>
+      <div class="office-card reveal">
+        <img src="KakaoTalk_20260202_095021674_23.jpg" alt="사무실 전경 – 실제 업무 현장" loading="lazy" decoding="async">
+        <div class="office-cap"><div class="office-cap-title">사무실 전경</div><div class="office-cap-desc">정산 검증이 이뤄지는 실제 업무 현장</div></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1301,6 +1381,10 @@ section { padding: 80px 0; }
 
 <!-- QUOTE -->
 <section class="quote" id="quote">
+  <video class="bg-video" muted loop playsinline preload="none">
+    <source src="8347240-uhd_3840_2160_25fps%20(1).mp4" type="video/mp4">
+  </video>
+  <div class="bg-video-overlay"></div>
   <div class="container">
     <div class="section-head center" style="position:relative">
       <div class="section-tag">CONTACT</div>
@@ -1553,7 +1637,7 @@ function submitQuote(e) {
   Array.prototype.forEach.call(heroEls, function(el, i){ el.classList.add('reveal'); el.style.transitionDelay = (i * 0.1) + 's'; });
   Array.prototype.forEach.call(document.querySelectorAll('.positioning-grid > div:first-child, .greeting-photo'), function(el){ el.classList.add('reveal','reveal-left'); });
   Array.prototype.forEach.call(document.querySelectorAll('.pos-visual, .greeting-body'), function(el){ el.classList.add('reveal','reveal-right'); });
-  Array.prototype.forEach.call(document.querySelectorAll('.urgent-grid, .strength-grid, .svc-grid, .reg-grid, .sys-grid, .proc-steps, .case-grid, .faq-list'), function(grid){
+  Array.prototype.forEach.call(document.querySelectorAll('.urgent-grid, .strength-grid, .svc-grid, .reg-grid, .sys-grid, .proc-steps, .case-grid, .faq-list, .office-grid'), function(grid){
     Array.prototype.forEach.call(grid.children, function(child, i){ if (child.classList.contains('reveal')) child.style.transitionDelay = (i * 0.07) + 's'; });
   });
   var io = new IntersectionObserver(function(entries){
@@ -1610,6 +1694,29 @@ function submitQuote(e) {
     setTimeout(function(){ if (s.parentNode) s.parentNode.removeChild(s); }, 600);
   }
   Array.prototype.forEach.call(document.querySelectorAll('.btn, .nav-cta, .form-submit, .float-btn'), function(b){ b.addEventListener('click', addRipple); });
+})();
+
+// 배경 동영상: 화면에 보일 때만 재생(성능 최적화 · 4K 동시 디코딩 방지)
+(function(){
+  var vids = document.querySelectorAll('.bg-video');
+  if (!vids.length) return;
+  function tryPlay(v){ var p = v.play(); if (p && p.catch) p.catch(function(){}); }
+  if (!('IntersectionObserver' in window)) {
+    Array.prototype.forEach.call(vids, tryPlay);
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      var v = en.target;
+      if (en.isIntersecting) {
+        if (v.preload === 'none') v.preload = 'auto';
+        tryPlay(v);
+      } else {
+        v.pause();
+      }
+    });
+  }, { threshold: 0.15 });
+  Array.prototype.forEach.call(vids, function(v){ io.observe(v); });
 })();
 
 // 마퀴 스크롤 가속
